@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+    <title>Orion IA</title>
+</head>
+<body>
+
+    <section id="orion">
+        <header>
+            <div class="logo">
+                Orion
+            </div>
+            <nav class="navbar">
+                <a href="#">Orion</a>
+                <a href="#">Sobre</a>
+                <a href="#">Projetos</a>
+            </nav>
+        </header>
+
+        <main class="content">
+            <h1>Olá Pedro, como posso te ajudar?</h1>
+            
+            <div class="chat-container">
+                <div class="messages" id="messages">
+                    <div class="message ai">
+                        <div class="message-bubble">
+                            Olá! Sou Orion, sua IA assistente. Como posso ajudá-lo hoje?
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-container">
+                    <input type="text" id="messageInput" placeholder="Digite sua mensagem aqui..." />
+                    <button id="sendBtn">Enviar</button>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <script>
+        const messagesContainer = document.getElementById('messages');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        function addMessage(text, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'ai'}`;
+            messageDiv.innerHTML = `<div class="message-bubble">${text}</div>`;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        sendBtn.addEventListener('click', () => {
+            const text = messageInput.value.trim();
+            if (text) {
+                addMessage(text, true);
+                messageInput.value = '';
+                
+                // Simular resposta da IA
+                setTimeout(() => {
+                    addMessage('Entendi sua mensagem. Como posso ajudá-lo melhor?', false);
+                }, 500);
+            }
+        });
+
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendBtn.click();
+            }
+        });
+    </script>
+    
+</body>
+</html>
